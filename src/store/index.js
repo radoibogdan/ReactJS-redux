@@ -3,11 +3,12 @@ import { createStore } from 'redux';
 
 const initialState = { counter : 0, showCounter: true };
 
-// Preparing our global state slice
+// createSlice - prepares our global state slice
+// creates action ids for every reducer
 const counterSlice = createSlice({
   name: 'counter',
   initialState,
-  reducers : {
+  reducers: {
     increment(state) {
       // it seems we are changing state directly(which is forbidden) but it's just a copy
       state.counter++;
@@ -16,7 +17,7 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increase(state, action) {
-      state.counter = state.counter + action.amount;
+      state.counter = state.counter + action.payload;
     },
     toggleCounter(state) {
       state.showCounter = !state.showCounter;
@@ -24,6 +25,19 @@ const counterSlice = createSlice({
   }
 });
 
+// Merge multiple reducers into one reducer
+const store = configureStore({
+  reducer: counterSlice.reducer
+});
+
+// Export Actions
+export const counterActions = counterSlice.actions; 
+
+// Export Store
+export default store;
+
+
+// REDUX - w/o Redux Toolkit
 // const counterReducer = (state = initialState, action) => {
 //   if (action.type === 'increment') {
 //     return {
@@ -56,10 +70,3 @@ const counterSlice = createSlice({
 //   return state;
 // };
 // const store = createStore(counterReducer);
-
-// Merge multiple reducers into one reducer
-
-const store = configureStore({
-  reducer: counterSlice.reducer
-});
-export default store;
