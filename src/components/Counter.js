@@ -1,5 +1,5 @@
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { counterActions } from '../store';
+import { counterActions } from '../store/counter';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -8,8 +8,8 @@ const Counter = () => {
 
   // useSelector => extract the part of the state that we need in this component (counter in our case)
   // Automatically sets up subscription to the redux store for this component. If store value changes => component is re-executed
-  const counter = useSelector(state => state.counter);
-  const show = useSelector(state => state.showCounter);
+  const counter = useSelector(state => state.counter.counter);
+  const show = useSelector(state => state.counter.showCounter);
 
   const incrementHandler = () => {
     dispatch(counterActions.increment());
